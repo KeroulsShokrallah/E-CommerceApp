@@ -39,7 +39,7 @@ namespace E_Commerce.Persistence.Initializers
 
 				if(!appDbContext.ProductTypes.Any())
 				{
-					var TypesData = await File.ReadAllTextAsync(@"../Infrastrctural/E-Commerce.Persistence/Context/DataSeed/type.json");
+					var TypesData = await File.ReadAllTextAsync(@"../Infrastrctural/E-Commerce.Persistence/Context/DataSeed/types.json");
 					var Types = JsonSerializer.Deserialize<List<ProductType>>(TypesData);
 					if (Types != null && Types.Any())
 					{

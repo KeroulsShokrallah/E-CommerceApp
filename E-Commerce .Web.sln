@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastrctural", "Infrastrc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Domain", "Core\E-Commerce.Domain\E-Commerce.Domain.csproj", "{F65B51A4-EDF0-4374-9410-D70173C40394}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Services", "Core\E-Commerce.Domain\E-Commerce.Services\E-Commerce.Services.csproj", "{7868842A-DB8B-4B6E-B4DD-8FDDCC669F9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Service", "Core\E-Commerce.Services\E-Commerce.Service.csproj", "{7868842A-DB8B-4B6E-B4DD-8FDDCC669F9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.ServicesAbstraction", "Core\E-Commerce.ServicesAbstraction\E-Commerce.ServicesAbstraction.csproj", "{90211401-AB92-4FD3-A992-8B3020F60B3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Services.Abstraction", "Core\E-Commerce.ServicesAbstraction\E-Commerce.Services.Abstraction.csproj", "{90211401-AB92-4FD3-A992-8B3020F60B3B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Persistence", "Infrastrctural\E-Commerce.Persistence\E-Commerce.Persistence.csproj", "{C94ADBF9-ACEE-4F11-BF8A-F29EC076B3B7}"
 EndProject

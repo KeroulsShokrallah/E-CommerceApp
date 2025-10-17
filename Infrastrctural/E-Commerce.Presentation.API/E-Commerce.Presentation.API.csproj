@@ -8,7 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\E-Commerce.ServicesAbstraction\E-Commerce.ServicesAbstraction.csproj" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <Folder Include="Controllers" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\E-Commerce.ServicesAbstraction\E-Commerce.Services.Abstraction.csproj" />
+  </ItemGroup>
 </Project>
