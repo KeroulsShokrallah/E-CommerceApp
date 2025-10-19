@@ -1,5 +1,5 @@
-﻿using E_Commerce.ServicesAbstraction;
-using E_Commerce.Shared.DataTransferObject.Products;
+﻿
+using E_Commerce.Domain.Entites.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +8,34 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Services.Services
 {
-    internal class ProductService : IProductService
+    internal class ProductService(IUnitOfWork unitOfWork, IMapper mapper) : IProductService
     {
-        public Task<IEnumerable<BrandResponse>> GetBrandsAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<BrandResponse>> GetBrandsAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var brands = await unitOfWork.GetRepository<ProductBrand, int>()
+                .GetAllAsync(cancellationToken);
+            return mapper.Map<IEnumerable<BrandResponse>>(brands);
         }
 
-        public Task<ProductResponse?> GetByIdAsync(int Id, CancellationToken cancellationToken = default)
+        public async Task<ProductResponse?> GetByIdAsync(int Id, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var product = await unitOfWork.GetRepository<Product, int>() 
+                .GetByIdAsync(Id, cancellationToken);
+            return mapper?.Map<ProductResponse>(product);   
         }
 
-        public Task<IEnumerable<ProductResponse>> GetProductsAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<ProductResponse>> GetProductsAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var products = await unitOfWork.GetRepository<Product, int>()
+      .GetAllAsync(cancellationToken);
+            return mapper.Map<IEnumerable<ProductResponse>>(products);
         }
 
-        public Task<IEnumerable<TypeResponse>> GetTypesAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TypeResponse>> GetTypesAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var types = await unitOfWork.GetRepository<ProductType, int>()
+      .GetAllAsync(cancellationToken);
+            return mapper.Map<IEnumerable<TypeResponse>>(types);
         }
     }
 }

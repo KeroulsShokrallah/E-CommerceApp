@@ -1,6 +1,7 @@
 global using E_Commerce.Persistence.DependencyInjection;
 global using Microsoft.EntityFrameworkCore.Internal;
 using E_Commerce.Domain.Contract;
+using E_Commerce.Services.DependencyInjection;
 using System.Threading.Tasks;
 
 namespace E_Commerce_.Web
@@ -13,6 +14,7 @@ namespace E_Commerce_.Web
 
             // Add services to the container.
             builder.Services.AddPersistenceService(builder.Configuration);
+            builder.Services.AddApplicationsServices();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -34,7 +36,7 @@ namespace E_Commerce_.Web
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

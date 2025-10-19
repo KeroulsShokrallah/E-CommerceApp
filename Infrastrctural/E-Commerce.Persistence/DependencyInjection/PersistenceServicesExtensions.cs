@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Persistence.Context;
 using E_Commerce.Persistence.Initializers;
+using E_Commerce.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -20,6 +21,7 @@ namespace E_Commerce.Persistence.DependencyInjection
                 options.UseSqlServer(connection);
             });
             services.AddScoped<IDbInitializer, Initializer>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }
