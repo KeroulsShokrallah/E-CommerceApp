@@ -14,9 +14,11 @@ namespace E_Commerce.Domain.Contract
         public void Update(TEntity entity);
 
         Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken=default);
+        Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity> specification,CancellationToken cancellationToken=default);
         Task<TEntity?> GetByIdAsync(Tkey id ,CancellationToken cancellationToken=default);
+        Task<TEntity?> GetAsync(ISpecification<TEntity> specification ,CancellationToken cancellationToken=default);
 
-        
+        Task<int> CountAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken);
 
         
     }

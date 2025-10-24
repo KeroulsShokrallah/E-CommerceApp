@@ -1,5 +1,8 @@
 ﻿
 using E_Commerce.Domain.Entites.Products;
+using E_Commerce.Services.Specification;
+using E_Commerce.Shared.DataTransferObject;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,22 +22,27 @@ namespace E_Commerce.Services.Services
 
         public async Task<ProductResponse?> GetByIdAsync(int Id, CancellationToken cancellationToken = default)
         {
-            var product = await unitOfWork.GetRepository<Product, int>() 
-                .GetByIdAsync(Id, cancellationToken);
-            return mapper?.Map<ProductResponse>(product);   
+            var spec = new ProductBrandTypeSpecification(Id);
+            var product = await unitOfWork.GetRepository<Product, int>()
+                .GetAsync(spec, cancellationToken);
+            return mapper?.Map<ProductResponse>(product);
         }
 
-        public async Task<IEnumerable<ProductResponse>> GetProductsAsync(CancellationToken cancellationToken = default)
+        public async Task<PaginatedResult<ProductResponse>> GetProductsAsync(ProductQueryParameters parameters, CancellationToken cancellationToken = default)
         {
-            var products = await unitOfWork.GetRepository<Product, int>()
-      .GetAllAsync(cancellationToken);
-            return mapper.Map<IEnumerable<ProductResponse>>(products);
+            var spec = new ProductBrandTypeSpecification(parameters);
+            var data = await unitOfWork.GetRepository<Product, int>()
+                                .GetAllAsync(spec, cancellationToken);
+            var totalCount = await unitOfWork.GetRepository<Product,int>()
+                             .CountAsync(new ProductCountSpecification(parameters) , cancellationToken);
+            var products = mapper.Map<IEnumerable<ProductResponse>>(data);
+            return new PaginatedResult<ProductResponse>(parameters.PageIndex, products.Count(), totalCount, products.ToList());
         }
 
         public async Task<IEnumerable<TypeResponse>> GetTypesAsync(CancellationToken cancellationToken = default)
         {
             var types = await unitOfWork.GetRepository<ProductType, int>()
-      .GetAllAsync(cancellationToken);
+                            .GetAllAsync(cancellationToken);
             return mapper.Map<IEnumerable<TypeResponse>>(types);
         }
     }
