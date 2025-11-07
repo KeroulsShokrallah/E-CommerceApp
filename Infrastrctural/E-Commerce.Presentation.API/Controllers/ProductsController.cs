@@ -1,4 +1,5 @@
-﻿using E_Commerce.ServicesAbstraction;
+﻿using E_Commerce.Presentation.API.Attributes;
+using E_Commerce.ServicesAbstraction;
 using E_Commerce.Shared.DataTransferObject;
 using E_Commerce.Shared.DataTransferObject.Products;
 using E_Commerce_.Web.Controllers;
@@ -14,7 +15,7 @@ namespace E_Commerce.Presentation.API.Controllers
 
     public class ProductsController(IProductService service) : ApiControllerBase 
     {
-
+        [RedisCashAttributes]
         [HttpGet]
         public async Task<ActionResult<PaginatedResult<ProductResponse>>> GetProducts([FromQuery]ProductQueryParameters parameters, CancellationToken cancellationToken = default)
         {
