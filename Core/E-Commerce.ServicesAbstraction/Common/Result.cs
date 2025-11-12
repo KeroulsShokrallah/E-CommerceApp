@@ -18,11 +18,11 @@ namespace E_Commerce.ServicesAbstraction.Common
         protected Result() { }
         protected Result (Error error)
         {
-            _errors = [error];
+            _errors.Add (error);
         }
         protected Result(List<Error> erros)
         {
-            _errors = erros;
+            _errors.AddRange (erros);
         }
 
         public static Result OK() => new Result();
