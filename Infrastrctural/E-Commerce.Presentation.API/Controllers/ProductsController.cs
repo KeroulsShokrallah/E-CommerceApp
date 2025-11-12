@@ -25,8 +25,13 @@ namespace E_Commerce.Presentation.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<ProductResponse>>> GetById(int id, CancellationToken cancellationToken = default)
         {
+            
             var respone = await service.GetByIdAsync(id, cancellationToken);
-            return Ok(respone);
+         if (respone.IsSuccess)
+            {
+                return Ok(respone);
+            }
+          return NotFound();
         }
         [HttpGet("Brands")]
         public async Task<ActionResult<IEnumerable<BrandResponse>>> GetBrands(CancellationToken cancellationToken = default)

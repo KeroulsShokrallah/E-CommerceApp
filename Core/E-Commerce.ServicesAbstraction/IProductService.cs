@@ -10,7 +10,7 @@ namespace E_Commerce.ServicesAbstraction
 {
     public interface IProductService
     {
-        Task<ProductResponse?> GetByIdAsync(int Id, CancellationToken cancellationToken = default);
+        Task<Result<ProductResponse?>> GetByIdAsync(int Id, CancellationToken cancellationToken = default);
         Task<PaginatedResult<ProductResponse>> GetProductsAsync(ProductQueryParameters parameters, CancellationToken cancellationToken = default);
         Task<IEnumerable<TypeResponse>> GetTypesAsync(CancellationToken cancellationToken = default);
         Task<IEnumerable<BrandResponse>> GetBrandsAsync(CancellationToken cancellationToken = default);

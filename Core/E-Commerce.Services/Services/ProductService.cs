@@ -1,6 +1,8 @@
 ﻿
 using E_Commerce.Domain.Entites.Products;
+using E_Commerce.Services.Exceptions;
 using E_Commerce.Services.Specification;
+using E_Commerce.ServicesAbstraction.Common;
 using E_Commerce.Shared.DataTransferObject;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -20,12 +22,13 @@ namespace E_Commerce.Services.Services
             return mapper.Map<IEnumerable<BrandResponse>>(brands);
         }
 
-        public async Task<ProductResponse?> GetByIdAsync(int Id, CancellationToken cancellationToken = default)
+        public async Task<Result<ProductResponse?>> GetByIdAsync(int Id, CancellationToken cancellationToken = default)
         {
             var spec = new ProductBrandTypeSpecification(Id);
             var product = await unitOfWork.GetRepository<Product, int>()
                 .GetAsync(spec, cancellationToken);
-            return mapper?.Map<ProductResponse>(product);
+               
+            return product is null ? Error.Product.NotFound : mapper.Map<Product,ProductResponse>(product);
         }
 
         public async Task<PaginatedResult<ProductResponse>> GetProductsAsync(ProductQueryParameters parameters, CancellationToken cancellationToken = default)

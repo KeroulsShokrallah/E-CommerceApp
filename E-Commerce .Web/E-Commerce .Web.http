@@ -7,3 +7,10 @@ Accept: application/json
 GET {{E_Commerce_.Web_HostAddress}}/Api/Products
 Accept: application/json
 ###
+
+GET {{E_Commerce_.Web_HostAddress}}/Api/Products/22
+Accept: application/json
+###
+
+GET {{E_Commerce_.Web_HostAddress}}/Api/Products/22/2
+Accept: application/json

@@ -2,6 +2,8 @@ global using E_Commerce.Persistence.DependencyInjection;
 global using Microsoft.EntityFrameworkCore.Internal;
 using E_Commerce.Domain.Contract;
 using E_Commerce.Services.DependencyInjection;
+using E_Commerce_.Web.Handler;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace E_Commerce_.Web
@@ -19,17 +21,39 @@ namespace E_Commerce_.Web
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+            builder.Services.AddProblemDetails();
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                   {
+                       var erros = actionContext.ModelState.Where(x => x.Value.Errors.Count() > 0)
+                       .ToDictionary(x => x.Key, x => x.Value.Errors.Select(o => o.ErrorMessage).ToArray());
+                       var problem = new ProblemDetails
+                       {
+                           Title = "Validation Errors",
+                           Detail = "One Or More Validation errors occurred",
+                           Status = StatusCodes.Status400BadRequest,
+                           Extensions = {{ "errors", erros }}
 
-            
+                       };
+                       return new  BadRequestObjectResult(problem);
+                   };
+
+            });
+
+
             var app = builder.Build();
 
             #region Initialize Db
-            var scope =  app.Services.CreateScope();
+            var scope = app.Services.CreateScope();
             var initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await initializer.InitializeAsync();
 
             #endregion
 
+            //app.UseCustomExceptionHandler();
+            app.UseExceptionHandler();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
